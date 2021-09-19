@@ -1,6 +1,5 @@
 package com.codeonblue.minesweeper.client
 
-import com.codeonblue.minesweeper.BASE_URL
 import com.codeonblue.minesweeper.dto.CellStatus
 import com.codeonblue.minesweeper.dto.CreatedGameResponse
 import com.codeonblue.minesweeper.dto.MarkCellDto
@@ -13,7 +12,7 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpPost
 import kotlin.system.exitProcess
 
-data class MineSweeperClient(val baseUrl: String) {
+class MineSweeperClient(private val baseUrl: String? = "https://minesweep-api.herokuapp.com") {
 
     fun getGameId(): String {
         FuelManager.instance.basePath = baseUrl
@@ -43,7 +42,7 @@ data class MineSweeperClient(val baseUrl: String) {
         cellNumber: String,
         cellCurrentStatus: String
     ): String {
-        FuelManager.instance.basePath = BASE_URL
+        FuelManager.instance.basePath = baseUrl
         val(request, _, result) = "/games/$gameId/cells/$cellNumber/mark"
             .httpPost()
             .header("Content-Type" to "application/json")
@@ -88,7 +87,7 @@ data class MineSweeperClient(val baseUrl: String) {
     }
 
     fun revealCell(gameId: String, cellNumber: String): Map<String, Int> {
-        FuelManager.instance.basePath = BASE_URL
+        FuelManager.instance.basePath = baseUrl
         val(request, _, result) = "/games/$gameId/cells/$cellNumber/reveal"
             .httpPost()
             .header("Content-Type" to "application/json")

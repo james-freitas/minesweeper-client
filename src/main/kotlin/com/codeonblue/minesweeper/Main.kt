@@ -4,9 +4,6 @@ import com.codeonblue.minesweeper.client.MineSweeperClient
 import java.util.Scanner
 import kotlin.system.exitProcess
 
-
-const val BASE_URL = "https://minesweep-api.herokuapp.com"
-
 fun main(args: Array<String>) {
 
     printHeaders()
@@ -54,7 +51,7 @@ fun markCell(gameId: String): String {
         println("Mark a cell - Enter cell current status(UNCHECKED | FLAGGED | QUESTION_MARK: ")
         val cellCurrentStatus = scan.nextLine().trim().toUpperCase()
 
-        val client = MineSweeperClient(BASE_URL)
+        val client = MineSweeperClient()
         return client.markCellAndReturnCurrentCellStatus(
             gameId = gameId,
             cellNumber = cellNumber,
@@ -74,7 +71,7 @@ fun revealCell(gameId: String): Map<String, Int> {
         println("Mark a cell - Enter cell number: ")
         val cellNumber = scan.nextLine().trim().toUpperCase()
 
-        val client = MineSweeperClient(BASE_URL)
+        val client = MineSweeperClient()
         return client.revealCell(
             gameId = gameId,
             cellNumber = cellNumber
@@ -97,7 +94,7 @@ private fun inviteToPlay() {
     }
 }
 
-private fun getGameId() = MineSweeperClient(BASE_URL).getGameId()
+private fun getGameId() = MineSweeperClient().getGameId()
 
 private fun printHeaders() {
     println("Welcome to Minesweeper API client - Type \"exit\" to quit")
