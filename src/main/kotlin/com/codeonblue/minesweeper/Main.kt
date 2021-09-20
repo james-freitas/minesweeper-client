@@ -6,100 +6,19 @@ import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
-    printHeaders()
+    // Prints the id of the new game created
+    println(createGameAndReturnGameId())
 
-    inviteToPlay()
+    // Prints all cells that could be revealed
+    println(revealCellOn(
+        gameId = "1",
+        cellNumber = "1"
+    ))
 
-    val gameId = getGameId()
-    println("Id of game created: $gameId")
-
-    playGame(gameId)
-
-    println("Program exited")
-}
-
-fun playGame(gameId: String) {
-
-    println("Options")
-    println("-----------------------------------------------------------")
-    println()
-    println("1. Mark a cell")
-    println("2. Reveal a cell")
-    println("3. End game")
-    println()
-
-    val scan = Scanner(System.`in`)
-    while (true) {
-        val input = scan.nextLine()
-        when (input.trim().toLowerCase()) {
-            "1" -> println(markCell(gameId))
-            "2" -> println(revealCell(gameId))
-            "3" -> {
-                println("You asked to exit the game")
-                exitProcess(0)
-            }
-        }
-    }
-}
-
-fun markCell(gameId: String): String {
-    val scan = Scanner(System.`in`)
-
-    try {
-        println("Mark a cell - Enter cell number: ")
-        val cellNumber = scan.nextLine().trim().toUpperCase()
-        println("Mark a cell - Enter cell current status(UNCHECKED | FLAGGED | QUESTION_MARK: ")
-        val cellCurrentStatus = scan.nextLine().trim().toUpperCase()
-
-        val client = MineSweeperClient()
-        return client.markCellAndReturnCurrentCellStatus(
-            gameId = gameId,
-            cellNumber = cellNumber,
-            cellCurrentStatus = cellCurrentStatus
-        )
-
-    } catch (ex: Exception) {
-        println("An error occurred due to: ${ex.message}")
-        exitProcess(0)
-    }
-}
-
-fun revealCell(gameId: String): Map<String, Int> {
-    val scan = Scanner(System.`in`)
-
-    try {
-        println("Mark a cell - Enter cell number: ")
-        val cellNumber = scan.nextLine().trim().toUpperCase()
-
-        val client = MineSweeperClient()
-        return client.revealCell(
-            gameId = gameId,
-            cellNumber = cellNumber
-        )
-
-    } catch (ex: Exception) {
-        println("An error occurred due to: ${ex.message}")
-        exitProcess(0)
-    }
-}
-
-private fun inviteToPlay() {
-    println("Do you want to create a new game (yes/no)? ")
-
-    val gameScan = Scanner(System.`in`)
-    val gameAnswer = gameScan.nextLine()
-    if (gameAnswer.trim().toLowerCase() != "yes") {
-        println("You opted to leave.  See you next time")
-        exitProcess(0)
-    }
-}
-
-private fun getGameId() = MineSweeperClient().getGameId()
-
-private fun printHeaders() {
-    println("Welcome to Minesweeper API client - Type \"exit\" to quit")
-    println("-----------------------------------------------------------")
-    println()
-    println("Base url of MineSweeper API > minesweep-api.herokuapp.com")
-    println()
+    // Prints the status of the cell marked
+    println(markCellAndReturnCurrentCellStatus(
+        gameId = "a723dbce-eaa3-498f-9887-57ca1d33bd44",
+        cellNumber = "1",
+        cellCurrentStatus = "UNCHECKED"
+    ))
 }
