@@ -1,24 +1,26 @@
 package com.codeonblue.minesweeper
 
-import com.codeonblue.minesweeper.client.MineSweeperClient
-import java.util.Scanner
-import kotlin.system.exitProcess
-
 fun main(args: Array<String>) {
 
     // Prints the id of the new game created
-    println(createGameAndReturnGameId())
+    val gameId = createGameAndReturnGameId()
+    println(gameId)
+    println()
 
-    // Prints all cells that could be revealed
-    println(revealCellOn(
-        gameId = "1",
+    // Prints all cells that could be reveled and the game status
+    val reveledCellResponse = revealCellOn(
+        gameId = gameId,
         cellNumber = "1"
-    ))
+    )
+    println("Reveled cells")
+    println(reveledCellResponse.reveledCells.toString())
+    println()
+    println("Game status: ${reveledCellResponse.gameStatus}")
+    println()
 
     // Prints the status of the cell marked
     println(markCellAndReturnCurrentCellStatus(
-        gameId = "a723dbce-eaa3-498f-9887-57ca1d33bd44",
-        cellNumber = "1",
-        cellCurrentStatus = "UNCHECKED"
+        gameId = gameId,
+        cellNumber = "1"
     ))
 }
