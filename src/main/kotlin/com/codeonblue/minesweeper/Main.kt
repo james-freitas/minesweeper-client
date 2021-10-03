@@ -4,7 +4,7 @@ fun main(args: Array<String>) {
 
     // Prints the id of the new game created
     val gameId = createGameAndReturnGameId()
-    println(gameId)
+    println("Game id of the game created: $gameId")
     println()
 
     // Prints all cells that could be reveled and the game status
@@ -19,8 +19,9 @@ fun main(args: Array<String>) {
     println()
 
     // Prints the status of the cell marked
-    println(markCellAndReturnCurrentCellStatus(
+    val currentCellStatus = markCellAndReturnCurrentCellStatus(
         gameId = gameId,
         cellNumber = "1"
-    ))
+    )
+    println("Cell 1 has the $currentCellStatus status")
 }
